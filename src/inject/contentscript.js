@@ -2,6 +2,8 @@ var SHORTENED_URL = "//goo.gl/";
 var MARKER_CLASS = "googl_trigger";
 var API_KEY = "key=AIzaSyCLUqYtgHq8IyB9wQepNtCUE3Af4L_2qyA&";
 API_KEY = "";
+
+// Example: https://www.googleapis.com/urlshortener/v1/url?projection=FULL&shortUrl=http://goo.gl/f5vbe
 var SERVICE_API = "https://www.googleapis.com/urlshortener/v1/url?" + API_KEY + "projection=FULL&shortUrl="; // ANALYTICS_CLICKS, ANALYTICS_TOP_STRINGS, FULL
 var INDICATOR_CLASS = "triggerHighlight";
 
@@ -25,24 +27,27 @@ var getContent = function getContent(anchor, content){
 		async: false,
 		data: {},
 		success: function(data){
-			output = 
-			"<span class=\"fullstats\"><a href=\"" + statsUrl + "\">full stats</a></span>" + 
-			"<div class=\"title\">Stats Extraction for: " + data.id + "</div>" + 
+			output =
+			"<span class=\"fullstats\"><a href=\"" + statsUrl + "\">full stats</a></span>" +
+			"<div class=\"title\">Stats Extraction for: " + data.id + "</div>" +
 			"<a href=\"" + data.longUrl + "\">" + data.longUrl + "</a><br />" +
 			"Created: " + new Date(data.created) + "&nbsp;" +
 			"<hr />" +
 			"<span class=\"heading\">Clicks: " + data.analytics.allTime.shortUrlClicks + "</span><br />" +
 			"day:" + data.analytics.day.shortUrlClicks + "&nbsp;" +
 			"week:" + data.analytics.week.shortUrlClicks + "&nbsp;" +
-			"month:" + data.analytics.month.shortUrlClicks + "&nbsp;" + 
-			"<hr />" +
-			"Most popular:<br />" +
-			"" + data.analytics.allTime.referrers[0].id + " (" + data.analytics.allTime.referrers[0].count + ") from " + 
-			"" + data.analytics.allTime.countries[0].id + " (" + data.analytics.allTime.countries[0].count + ")" + 
-			"<br />" +
-			"" + data.analytics.allTime.browsers[0].id + " (" + data.analytics.allTime.browsers[0].count + ") on " + 
-			"" + data.analytics.allTime.platforms[0].id + " (" + data.analytics.allTime.platforms[0].count + ")" + 
-			"";
+			"month:" + data.analytics.month.shortUrlClicks + "&nbsp;";
+
+			if(data.analytics.allTime.referrers && data.analytics.allTime.countries && data.analytics.allTime.browsers && data.analytics.allTime.platforms){
+				output += "<hr />" +
+				"Most popular:<br />" +
+				"" + data.analytics.allTime.referrers[0].id + " (" + data.analytics.allTime.referrers[0].count + ") from " +
+				"" + data.analytics.allTime.countries[0].id + " (" + data.analytics.allTime.countries[0].count + ")" +
+				"<br />" +
+				"" + data.analytics.allTime.browsers[0].id + " (" + data.analytics.allTime.browsers[0].count + ") on " +
+				"" + data.analytics.allTime.platforms[0].id + " (" + data.analytics.allTime.platforms[0].count + ")" +
+				"";
+			}
 //			content.html(output);
 
 		},

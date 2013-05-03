@@ -1,6 +1,6 @@
 {
   "name": "URL Stats Extractor",
-  "version": "0.6",
+  "version": "0.7",
   "manifest_version": 2,
   "description": "Shows stats for shortened URLs.  Currently: goo.gl",
 //  "homepage_url": "",
